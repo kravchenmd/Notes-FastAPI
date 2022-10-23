@@ -1,0 +1,2 @@
+postgres:
+  url: postgresql+psycopg2://toxkjbdj:QFkip2uh_Cwxi7oQfJZi4YqXNlM_BCNz@lucky.db.elephantsql.com/toxkjbdj
