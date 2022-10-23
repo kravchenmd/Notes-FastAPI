@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from db.connect import get_db
 from src.repository import notes
-from src.schemas.notes import NoteBase, NoteResponse, NoteUpdate
+from src.schemas.notes import NoteBase, NoteResponse, NoteUpdate, NoteDone
 
 router = APIRouter(prefix="/notes", tags=["notes"])
 
@@ -44,6 +44,14 @@ async def update_note(note_id: int, note: NoteUpdate, db: Session = Depends(get_
 @router.delete("/{note_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_note(note_id: int, db: Session = Depends(get_db)):
     note = await notes.delete_note(db, note_id)
+    if note is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Note with ID {note_id} not found")
+    return note
+
+
+@router.patch("/{note_id}", response_model=NoteResponse)
+async def patch_note(note_id: int, note: NoteDone, db: Session = Depends(get_db)):
+    note = await notes.done_note(db, note_id, note)
     if note is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Note with ID {note_id} not found")
     return note
