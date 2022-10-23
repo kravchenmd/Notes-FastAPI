@@ -12,6 +12,9 @@ class NoteUpdate(NoteBase):
     done: bool
 
 
+class NoteDone(BaseModel):
+    done: bool
+
 class NoteResponse(NoteBase):
     id: int
     done: bool
