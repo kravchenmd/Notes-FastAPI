@@ -14,7 +14,7 @@ async def get_user_by_id(db: Session, user_id: int):
     return user
 
 
-async def get_user_by_email(db: Session, email: int):
+async def get_user_by_email(db: Session, email: int) -> User:
     user = db.query(User).filter(User.email == email).first()
     return user
 
