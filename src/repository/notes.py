@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from src.models import Note
-from src.schemas.notes import NoteBase, NoteUpdate, NoteDone
+from src.schemas.notes import NoteModel, NoteUpdate, NoteDone
 
 
 async def get_all_notes(db: Session, skip: int, limit: int):
@@ -13,7 +13,7 @@ async def get_note(db: Session, note_id: int):
     return note
 
 
-async def create_note(db: Session, note: NoteBase):
+async def create_note(db: Session, note: NoteModel):
     new_note = Note(title=note.title, description=note.description)
     db.add(new_note)
     db.commit()

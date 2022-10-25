@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from db.connect import get_db
 from src.repository import notes
-from src.schemas.notes import NoteBase, NoteResponse, NoteUpdate, NoteDone
+from src.schemas.notes import NoteModel, NoteResponse, NoteUpdate, NoteDone
 
 router = APIRouter(prefix="/notes", tags=["notes"])
 
@@ -28,7 +28,7 @@ async def get_note(note_id: int = Path(ge=1, description="ID of the note"), db: 
 
 @router.post("/", status_code=status.HTTP_201_CREATED,
              response_model=NoteResponse)  # change return code to make post method idempotent
-async def create_note(note: NoteBase, db: Session = Depends(get_db)):
+async def create_note(note: NoteModel, db: Session = Depends(get_db)):
     note = await notes.create_note(db, note)
     return note
 
