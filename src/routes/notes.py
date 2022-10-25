@@ -50,7 +50,7 @@ async def delete_note(note_id: int, db: Session = Depends(get_db)):
 
 
 @router.patch("/{note_id}", response_model=NoteResponse)
-async def patch_note(note_id: int, note: NoteDone, db: Session = Depends(get_db)):
+async def done_note(note_id: int, note: NoteDone, db: Session = Depends(get_db)):
     note = await notes.done_note(db, note_id, note)
     if note is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Note with ID {note_id} not found")
